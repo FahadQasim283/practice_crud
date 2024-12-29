@@ -11,8 +11,7 @@ if (isset($_GET['id'])) {
         echo "Error deleting record: " . $conn->error;
     }
 }
-//ok? same kaam edit mn hoga id pass krengy id ki base pr update ki query chlae gy to specific record update hoga
-//srf smjh ly kl isi code mn change krna hoga understand kr bs yad ni rkhna
+
 $conn->close();
 header("Location: index.php");
 exit();
