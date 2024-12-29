@@ -17,7 +17,6 @@ $result = $conn->query($sql);
     <div class="container">
         <h2>User Management</h2>
         <a href="adduser.php" class="btn btn-add">Add New User</a>
-
         <table>
             <tr>
                 <th>ID</th>
@@ -49,8 +48,13 @@ $result = $conn->query($sql);
             }
             ?>
         </table>
+        <div class="age-del">
+            <form action="age_del.php" method="GET">
+                <input type="number" name="age" placeholder="Enter Age">
+                <button type="submit" class="btn btn-del">Delete by Age</button>
+            </form>
+        </div>
     </div>
 </body>
-
 </html>
 <?php $conn->close(); ?>
