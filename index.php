@@ -1,75 +1,56 @@
-<!-- db ko include/import krengy -->
-<?php include "db.php"; ?>
+<?php
+require_once 'db.php';
+
+$sql = "SELECT * FROM employeeInfo";
+$result = $conn->query($sql);
+?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PHP CRUD</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        table th,
-        table td {
-            border: 1px solid #000;
-            padding: 10px;
-            text-align: center;
-        }
-    </style>
+    <title>User Management</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-    <header>
-        <nav>
-            <h1>
-                This is php
-            </h1>
-        </nav>
-    </header>
-    <main>
+    <div class="container">
+        <h2>User Management</h2>
+        <a href="adduser.php" class="btn btn-add">Add New User</a>
+
         <table>
-            <thead>
+            <tr>
                 <th>ID</th>
-                <th>First Name</th>
-                <th>Last Name </th>
+                <th>Firt Name</th>
+                <th>Last Name</th>
                 <th>Age</th>
                 <th>Salary</th>
-                <th>Action</th>
-            </thead>
-            <tbody>
-                <?php
-                $query = "SELECT * FROM employeeInfo";
-                $result = mysqli_query($dbConnection, $query);
-                while ($row = mysqli_fetch_assoc($result)) {
-                    $id = $row["id"];
-                    $name = $row["firstName"];
-                    $lastName = $row["lastName"];
-                    $salary = $row["salary"];
-                    $age = $row["age"];
-                    echo "<tr>";
-                    echo "<td>$id</td>";
-                    echo "<td>$name</td>";
-                    echo "<td>$lastName</td>";
-                    echo "<td>$age</td>";
-                    echo "<td>$salary</td>";
-                    echo "<td><a href='edit.php?id=$id'>Edit</a> | <a href='delete.php?id=$id'>Delete</a></td>";
-                    echo "</tr>";
+                <th>Actions</th>
+            </tr>
+            <?php
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    ?>
+                    <tr>
+                        <td><?php echo $row['id']; ?></td>
+                        <td><?php echo $row['firstName']; ?></td>
+                        <td><?php echo $row['lastName']; ?></td>
+                        <td><?php echo $row['age']; ?></td>
+                        <td><?php echo $row['salary']; ?></td>
+                        <td>
+                            <a href="edit.php?id=<?php echo $row['id']; ?>" class="btn btn-edit">Edit</a>
+                            <a href="delete.php?id=<?php echo $row['id']; ?>" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete this user?')">Delete</a>
+                        </td>
+                    </tr>
+                    <?php
                 }
-                ?>
-            </tbody>
+            } else {
+                echo "<tr><td colspan='6'>No Employee found</td></tr>";
+            }
+            ?>
         </table>
-    </main>
+    </div>
 </body>
 
 </html>
+<?php $conn->close(); ?>
